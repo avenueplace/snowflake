@@ -13,11 +13,19 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    strategy:
+      matrix:
+        otp: ['25.0']
+        elixir: ['1.13.4', '1.14.2']
 
     steps:
       - uses: actions/checkout@v2
 
       - uses: erlef/setup-elixir@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
 
       - name: 'deps cache'
         uses: actions/cache@v3
